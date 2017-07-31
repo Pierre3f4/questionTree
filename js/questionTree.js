@@ -21,10 +21,18 @@
             }
         });
         elem.addClass(settings.containerClass);
-        elem.children(treeNodes).hide();
+        
 
         currentNode = $('.'+settings.nodeClass).first();
-        showNode(currentNode);
+        //showNode(currentNode);
+        elem.children(treeNodes).each(function(e){
+            console.log($(this));
+            if(e==0){
+                showNode($(this), true);
+            }else{
+                hideNode($(this));
+            }
+        });
 
         treeNodes.children('[destination]').on('click', function(e){
                 e.preventDefault();
@@ -58,11 +66,12 @@
         prevNodes.pop();
         showNode(prevNode);
     }
-    function showNode(node){
-        hideNode(currentNode);
+    function showNode(node, first){
+        if(first == undefined || first==false){
+            hideNode(currentNode);
+        }
         currentNode = node;
         prevNodes.push(currentNode);
-        console.log(prevNodes);
         node.showAnimation=settings.showAnimation;
         node.showAnimation();
     }
